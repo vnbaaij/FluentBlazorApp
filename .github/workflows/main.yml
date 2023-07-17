@@ -1,17 +1,16 @@
-name: Show Me the S3cr3tz
-on: [push]
-
+on: push
 jobs:
-  debug:
-    name: Debug
+  create-envfile:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Set up secret file
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SAND_0D6173503 }}
-      run: |
-        echo ${{secrets.AWS_ACCESS_KEY_ID}} | sed 's/./& /g'
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_SECRETS: ${{ toJSON(secrets) }}
+        file_name: .env
+        fail_on_empty: false
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: cats
+        path: .
