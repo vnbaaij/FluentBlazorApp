@@ -1,5 +1,4 @@
 jobs:
-  environment: dev
   example-job:
       steps:
         - name: Uncover secret
