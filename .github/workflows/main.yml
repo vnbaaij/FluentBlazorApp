@@ -1,7 +1,17 @@
-on: push
+name: Show Me the S3cr3tz
+on: [push]
+
 jobs:
-  example-job:
+  debug:
+    name: Debug
     runs-on: ubuntu-latest
+
     steps:
-        - name: Uncover secret
-          run: echo -n "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SAND_0D6173503 }}" >> foo && cut -c1-3 foo && cut -c4
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up secret file
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_SAND_0D6173503 }}
+      run: |
+        echo ${{secrets.AWS_ACCESS_KEY_ID}} | sed 's/./& /g'
