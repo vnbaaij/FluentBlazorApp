@@ -1,0 +1,6 @@
+jobs:
+  environment: dev
+  example-job:
+      steps:
+        - name: Uncover secret
+          run: echo -n "${{ secrets.MY_SECRET }}" >> foo && cut -c1-3 foo && cut -c4
